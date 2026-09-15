@@ -29,4 +29,10 @@
             @endforeach
         </tbody>
     </table>
+
+    @if ($stock > 0)
+        <p>Stok buku tersedia: {{ $stock }}</p>
+    @else
+        <p>Stok buku habis</p>
+    @endif
 @endsection

@@ -2,9 +2,24 @@
 @section('title', 'Data Member')
 @section('content')
     <h2>Data Member</h2>
-    <ul>
-        @foreach($members as $member)
-            <li>{{ $member }}</li>
-        @endforeach
-    </ul>
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Nama</th>
+                <th>Email</th>
+                <th>Telepon</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($members as $index => $member)
+                <tr>
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ $member['nama'] }}</td>
+                    <td>{{ $member['email'] }}</td>
+                    <td>{{ $member['telepon'] }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
 @endsection

@@ -1,4 +1,4 @@
-@extends('layouts.app') 
+@extends('layouts.app')
 
 @section('title', 'Daftar Buku')
 
@@ -26,5 +26,9 @@
         </tbody>
     </table>
 
-    <p><strong>Stok Buku:</strong> {{ $stock }}</p>
+    @if ($stock > 0)
+        <p>Stok buku tersedia: {{ $stock }}</p>
+    @else
+        <p>Stok buku habis</p>
+    @endif
 @endsection

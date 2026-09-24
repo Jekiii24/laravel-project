@@ -3,7 +3,9 @@
 @section('title', 'Daftar Buku')
 
 @section('content')
-    <h2>Daftar Buku</h2>
+    <h1>Daftar Buku</h1>
+
+    <p>Daftar Buku yang Tersedia di PerpustakaanQu</p>
 
     <table border="1" cellpadding="8" cellspacing="0">
         <thead>
@@ -12,27 +14,20 @@
                 <th>Judul</th>
                 <th>Penulis</th>
                 <th>Tahun Terbit</th>
-                <th>Lihat</th>
+                <th>Stock</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($books as $id => $book)
+            @foreach ($books as $book)
                 <tr>
-                    <td>{{ $id }}</td>
-                    <td>{{ $book['judul'] }}</td>
-                    <td>{{ $book['penulis'] }}</td>
-                    <td>{{ $book['tahun_terbit'] }}</td>
-                    <td>
-                        <a href="/books/{{ $id }}">Detail</a>
-                    </td>
+                    <td>{{ $book->id }}</td>
+                    <td>{{ $book->title }}</td>
+                    <td>{{ $book->author }}</td>
+                    <td>{{ $book->year }}</td>
+                    <td>{{ $book->stock }}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
 
-    @if ($stock > 0)
-        <p>Stok buku tersedia: {{ $stock }}</p>
-    @else
-        <p>Stok buku habis</p>
-    @endif
 @endsection

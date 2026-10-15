@@ -5,12 +5,42 @@
 @section('content')
     <form action="{{ route('books.store') }}" method="POST">
         @csrf
-        <input type="text" name="title" placeholder="Judul Buku" required>
-        <input type="text" name="author" placeholder="Penulis Buku" required>
-        <input type="number" name="year" placeholder="Tahun Terbit" required>
-        <input type="number" name="stock" placeholder="Stok Buku" required>
 
-        <button type="submit">Simpan</button>
+        <div>
+            <label>judul buku</label>
+            <input type="text" name="title" placeholder="judul buku">
+
+            @error('title')
+                <p>{{ $message }}</p>
+            @enderror
+        </div>
+        <div>
+            <label>penulis</label>
+            <input type="text" name="author" placeholder="penulis">
+
+            @error('author')
+                <p>{{ $message }}</p>
+            @enderror
+        </div>
+        <div>
+            <label>tahun</label>
+            <input type="number" name="year" placeholder="tahun">
+
+            @error('year')
+                <p>{{ $message }}</p>
+            @enderror
+        </div>
+        <div>
+            <label>stok</label>
+            <input type="number" name="stock" placeholder="stok">
+
+            @error('stock')
+                <p>{{ $message }}</p>
+            @enderror
+        </div>
+
+        <button type="submit">
+            Simpan
+        </button>
     </form>
-
 @endsection

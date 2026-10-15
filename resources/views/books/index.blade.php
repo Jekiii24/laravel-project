@@ -3,6 +3,11 @@
 @section('title', 'Daftar Buku')
 
 @section('content')
+    @if (session('success'))
+        <p>{{ session('success') }}</p>
+    @endif
+
+
     <h1>Daftar Buku</h1>
 
     <p>Daftar Buku yang Tersedia di PerpustakaanQu</p>

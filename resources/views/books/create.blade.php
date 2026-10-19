@@ -11,7 +11,7 @@
             <input type="text" name="title" placeholder="judul buku">
 
             @error('title')
-                <p>{{ $message }}</p>
+                <p class ="text-danger">{{ $message }}</p>
             @enderror
         </div>
         <div>
@@ -19,7 +19,7 @@
             <input type="text" name="author" placeholder="penulis">
 
             @error('author')
-                <p>{{ $message }}</p>
+                <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
         <div>
@@ -27,7 +27,7 @@
             <input type="number" name="year" placeholder="tahun">
 
             @error('year')
-                <p>{{ $message }}</p>
+                <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
         <div>
@@ -35,7 +35,7 @@
             <input type="number" name="stock" placeholder="stok">
 
             @error('stock')
-                <p>{{ $message }}</p>
+                <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
 

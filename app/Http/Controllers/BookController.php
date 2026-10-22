@@ -3,22 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Book;
 use Illuminate\Validation\Rule;
+use App\Models\Book;
+use App\Models\Category;
 
 class BookController extends Controller
 {
     //INDEX
     public function index()
     {
-        $books = Book::all();
+        $books = Book::with('category')->get();
         return view('books.index', compact('books'));
     }
 
     //CREATE
     public function create()
     {
-        return view('books.create');
+        $categories = Category::orderBy('name')->get();
+        return view('books.create', compact('categories'));
     }
 
     //STORE
@@ -31,7 +33,7 @@ class BookController extends Controller
                     'required',
                     'string',
                     'max:255',
-                    'unique:books,title,',
+                    Rule::unique('books', 'title'),
                 ],
             'author' => [
                 'required',
@@ -49,6 +51,10 @@ class BookController extends Controller
                 'integer',
                 'min:0',
                 'max_digits:5',
+            ],
+            'category_id' => [
+                'required',
+                'exists:categories,id',
             ],
         ]);
 
@@ -68,7 +74,9 @@ class BookController extends Controller
     //EDIT
     public function edit(Book $book)
     {
-        return view('books.edit', compact('book'));
+        $book = Book::findOrFail($book->id);
+        $categories = Category::orderBy('name')->get();
+        return view('books.edit', compact('book', 'categories'));
     }
 
     //UPDATE
@@ -102,6 +110,10 @@ class BookController extends Controller
                 'integer',
                 'min:0',
                 'max_digits:5',
+            ],
+            'category_id' => [
+                'required',
+                'exists:categories,id',
             ],
         ]);
         $book->update($validated);

@@ -18,6 +18,7 @@
             <tr>
                 <th>ID</th>
                 <th>Judul</th>
+                <th>Kategori</th>
                 <th>Lihat Detail</th>
                 <th>Edit buku</th>
             </tr>
@@ -27,6 +28,7 @@
                 <tr>
                     <td>{{ $book->id }}</td>
                     <td>{{ $book->title }}</td>
+                    <td>{{ $book->category->name ?? 'Belum Ada Kategori' }}</td>
                     <td><a href="{{ route('books.show', $book->id) }}">Lihat Detail</a></td>
                     <td><a href="{{ route('books.edit', $book->id) }}">Edit Buku</a></td>
                 </tr>

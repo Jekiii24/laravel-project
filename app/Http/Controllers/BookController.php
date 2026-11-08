@@ -2,39 +2,41 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use App\Models\Book;
 use App\Models\Category;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\Rule;
 
 class BookController extends Controller
 {
-    //INDEX
+    // INDEX
     public function index()
     {
         $books = Book::with('category')->get();
+
         return view('books.index', compact('books'));
     }
 
-    //CREATE
+    // CREATE
     public function create()
     {
         $categories = Category::orderBy('name')->get();
+
         return view('books.create', compact('categories'));
     }
 
-    //STORE
+    // STORE
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title' =>
-                [
-                    'bail',
-                    'required',
-                    'string',
-                    'max:255',
-                    Rule::unique('books', 'title'),
-                ],
+            'title' => [
+                'bail',
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('books', 'title'),
+            ],
             'author' => [
                 'required',
                 'string',
@@ -44,7 +46,7 @@ class BookController extends Controller
             'year' => [
                 'required',
                 'integer',
-                'between:1900,' . now()->year,
+                'between:1900,'.now()->year,
             ],
             'stock' => [
                 'required',
@@ -65,21 +67,22 @@ class BookController extends Controller
             ->with('success', 'Data buku berhasil ditambahkan.');
     }
 
-    //SHOW
+    // SHOW
     public function show(Book $book)
     {
         return view('books.show', compact('book'));
     }
 
-    //EDIT
+    // EDIT
     public function edit(Book $book)
     {
         $book = Book::findOrFail($book->id);
         $categories = Category::orderBy('name')->get();
+
         return view('books.edit', compact('book', 'categories'));
     }
 
-    //UPDATE
+    // UPDATE
     public function update(Request $request, Book $book)
     {
 
@@ -102,7 +105,7 @@ class BookController extends Controller
             'year' => [
                 'required',
                 'integer',
-                'between:1900,' . now()->year,
+                'between:1900,'.now()->year,
             ],
 
             'stock' => [
@@ -124,10 +127,16 @@ class BookController extends Controller
 
     }
 
-    //DESTROY
+    // DESTROY
     public function destroy(Book $book)
     {
+        Gate::authorize('delete', $book);
+
         $book->delete();
-        return redirect()->route('books.index');
+
+        return redirect()
+            ->route('books.index')
+            ->with('success', 'Buku berhasil dihapus.');
+
     }
 }

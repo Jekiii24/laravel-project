@@ -23,11 +23,17 @@
                 <td>{{ $book->year }}</td>
                 <td>{{ $book->stock }}</td>
                 <td>
-                    <form action="{{ route('books.destroy', $book) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit">Hapus</button>
-                    </form>
+                    @can('delete', $book)
+                        <form action="{{ route('books.destroy', $book->id) }}"
+                              method="POST"
+                              onsubmit="return confirm('Yakin ingin menghapus buku ini?')">
+
+                            @csrf
+                            @method('DELETE')
+
+                            <button type="submit">Hapus</button>
+                        </form>
+                    @endcan
             </tr>
         </tbody>
     </table>

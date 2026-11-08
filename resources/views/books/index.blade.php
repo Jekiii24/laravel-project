@@ -23,6 +23,7 @@
                 <th>Kategori</th>
                 <th>Lihat Detail</th>
                 <th>Edit buku</th>
+                <th>Hapus</th>
             </tr>
         </thead>
         <tbody>
@@ -33,6 +34,19 @@
                     <td>{{ $book->category->name ?? 'Belum Ada Kategori' }}</td>
                     <td><a href="{{ route('books.show', $book->id) }}">Lihat Detail</a></td>
                     <td><a href="{{ route('books.edit', $book->id) }}">Edit Buku</a></td>
+                    <td>
+                        @can('delete', $book)
+                            <form action="{{ route('books.destroy', $book->id) }}"
+                                  method="POST"
+                                  onsubmit="return confirm('Yakin ingin menghapus buku ini?')">
+
+                                @csrf
+                                @method('DELETE')
+
+                                <button type="submit">Delete</button>
+                            </form>
+                        @endcan
+                    </td>
                 </tr>
             @endforeach
         </tbody>
